@@ -1,0 +1,156 @@
+# Dependencies and package managers
+node_modules/
+jspm_packages/
+.npm
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+.yarn-integrity
+
+# Build outputs and compiled files
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+.vuepress/dist/
+.serverless/
+.fusebox/
+.dynamodb/
+build/Release/
+
+# Environment and configuration files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+.env.test
+
+# IDE and editor files
+.vscode/
+.vscode-test
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Logs and debugging
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Testing and coverage
+coverage/
+*.lcov
+.nyc_output/
+test-results/
+playwright-report/
+test-results.xml
+
+# Cache and temporary files
+.cache/
+.parcel-cache
+.eslintcache
+cache/
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup and version control files
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.orig.*
+*.rej.*
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Generated documentation
+docs/build/
+docs/_build/
+
+# Infrastructure and deployment
+.dockerignore
+Dockerfile*
+*.yaml
+*.yml
+!docker-compose*.yml
+*.tfstate
+*.tfstate.*
+.terraform/
+.cdn/
+.static/
+
+# Monitoring and analytics
+.sentryclirc
+.sentry/
+
+# Security and secrets
+.secrets/
+secrets/
+
+# Local development
+.local/
+local/
+
+# Application specific
+uploads/
+public/uploads/
+storage/
+public/storage/
+
+# Generated files
+.generated/
+generated/
+
+# Package manager lock files (uncomment if needed)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+# bun.lockb
+
+# TypeScript declaration files (uncomment if needed)
+# *.d.ts
+
+# Output of 'npm pack'
+*.tgz
+
+# Optional REPL history
+.node_repl_history 
