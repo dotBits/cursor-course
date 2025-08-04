@@ -1,3 +1,9 @@
+---
+description: TypeScript development best practices for folder structure, naming conventions, linting, file splitting, testing, and environment management
+globs: **/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.mts,**/*.cts
+alwaysApply: true
+---
+
 # TypeScript Development Best Practices
 
 ## 📁 Folder Structure
@@ -231,7 +237,3 @@ For large projects, organize into logical modules:
 - [ ] Build scripts are environment-specific
 - [ ] Project references are used for large codebases
 - [ ] Dependencies are clearly defined and managed
-description:
-globs:
-alwaysApply: false
----
