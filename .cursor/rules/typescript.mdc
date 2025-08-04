@@ -1,0 +1,237 @@
+# TypeScript Development Best Practices
+
+## 📁 Folder Structure
+
+Organize code by features and maintain a scalable structure:
+
+```
+my-project/
+│
+├── src/
+│   ├── components/      # UI or reusable parts
+│   ├── controllers/     # Logic for handling requests (e.g., in Node apps)
+│   ├── models/          # Data models and interfaces
+│   ├── services/        # Business logic
+│   ├── utils/           # Helper functions
+│   ├── config/          # Configuration files
+│   ├── types/           # Shared type definitions if needed
+│   └── index.ts         # Main entry point
+│
+├── dist/                # Compiled JS output
+├── node_modules/        # Dependencies
+├── .env                 # Environment variables
+├── .gitignore
+├── package.json
+├── tsconfig.json        # TypeScript config
+├── .eslintrc.json or .eslintrc.js (for linting)
+├── .prettierrc (optional, for formatting)
+└── README.md
+```
+
+**For larger projects**, use Project References to organize code into independent modules:
+
+```
+/my-app
+│
+├── tsconfig.json        // root solution config with references only
+├── packages/
+│   ├── core/
+│   │   └── tsconfig.json   // composite: true
+│   ├── ui/
+│   │   └── tsconfig.json   // composite: true, references core
+│   └── utils/
+│       └── tsconfig.json   // composite: true
+```
+
+## 🏷️ Naming Conventions
+
+Follow these conventions for clarity and consistency:
+
+### Variables, Functions, Parameters
+- Use **camelCase** (e.g., `getUserName`, `userProfile`)
+- Be descriptive and pronounceable (prefer `userProfile` over `uPrf`)
+
+### Types, Enums, Classes
+- Use **PascalCase** (e.g., `UserProfile`, `ApiResponse`)
+- Don't pluralize unless it's an array
+- Avoid unnecessary prefixes (`IUser`, `TUser` are not recommended)
+
+### Files and Folders
+- Use **kebab-case** or **camelCase** (e.g., `user-profile.ts`, `apiRoutes.ts`)
+- Be descriptive about purpose
+
+### Type Definitions
+- No unnecessary context: If you have a `Car` type, fields should be `make`, not `carMake`
+- Keep types focused and specific
+
+## 🧹 Linting and Code Quality
+
+### ESLint Configuration
+Use ESLint with typescript-eslint plugin as the de facto standard:
+
+```javascript
+// .eslintrc.js
+module.exports = {
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended'
+  ],
+  rules: {
+    "@typescript-eslint/no-explicit-any": "warn"
+  }
+};
+```
+
+### TypeScript Configuration
+Enable strict mode for maximum safety:
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true
+  }
+}
+```
+
+### Prettier Integration
+Pair with Prettier for automatic code formatting to maintain consistent style.
+
+## ✂️ File Splitting Logic
+
+### Single Responsibility Principle
+- Each file should have **one clear purpose**
+- If a service or component grows, move helpers into separate files (e.g., `helpers.ts`)
+- Types/interfaces can be co-located where used, or in `/types` folder if shared widely
+
+### Breaking Down Large Files
+- Consider breaking very large domains into subfolders with their own structure
+- Move related functionality into separate modules
+- Use Project References for large-scale organization
+
+### Project References Benefits
+- Each part is easier to understand and change
+- Faster builds since only changed parts get recompiled
+- Less error-prone dependency management
+- Enable `composite: true` for strict, fast, incremental builds
+
+## 🧪 Unit Testing
+
+### Testing Framework
+Use popular frameworks like Jest, Mocha, or Chai that support TypeScript well.
+
+### Test Structure
+Follow the **Arrange-Act-Assert (AAA)** pattern:
+
+```typescript
+describe('calculateTotal', () => {
+  test('should sum array of numbers', () => {
+    // Arrange: Prepare inputs
+    const numbers = [1, 2, 3];
+    
+    // Act: Run the function
+    const result = calculateTotal(numbers);
+    
+    // Assert: Check results
+    expect(result).toBe(6);
+  });
+});
+```
+
+### Testing Best Practices
+- Write **small, focused tests** for each functionality
+- Use **mocks and stubs** to isolate the unit under test
+- Cover **edge cases, errors, and unexpected inputs**
+- Name tests **descriptively** to communicate expected behavior
+- Keep tests **independent** so they can run in any order
+- **Automate test runs** on every commit using CI tools
+
+## 🌍 Environment Management
+
+### Environment-Specific Configuration
+Use different config files and build scripts for each environment:
+
+```json
+// package.json
+{
+  "scripts": {
+    "build:dev": "tsc --project tsconfig.dev.json",
+    "build:prod": "tsc --project tsconfig.prod.json",
+    "start": "node dist/index.js"
+  }
+}
+```
+
+### Environment Variables
+Store sensitive or environment-specific settings in environment variables:
+
+```typescript
+// Access environment variables
+const apiUrl = process.env.API_URL || 'http://localhost:3000';
+```
+
+### Environment Files
+- Use `.env.development`, `.env.production` for environment-dependent values
+- Maintain `.env.example` in repo for reference
+- **Never commit actual `.env` files** with sensitive data
+- Use libraries like `dotenv` to load environment variables during development
+
+### Type Declarations
+Help TypeScript with environment variable types:
+
+```typescript
+// types/env.d.ts
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      API_URL: string;
+      API_KEY: string;
+      NODE_ENV: 'development' | 'production' | 'test';
+    }
+  }
+}
+
+export {};
+```
+
+## 🔧 Build and Development Workflow
+
+### Project References Setup
+For large projects, organize into logical modules:
+
+1. Create sub-projects in folders like `/src/core`, `/src/ui`, `/src/utils`
+2. Each sub-project has its own `tsconfig.json` with `composite: true`
+3. Root `tsconfig.json` contains only references to sub-projects
+4. Use `tsc --build` to rebuild only changed parts
+
+### Multi-Package Projects
+- Define build order and dependencies clearly via references
+- Use `tsc -b` for incremental compilation
+- Integrate with tools like Webpack or Vite for frontend bundling
+
+### Development Tools
+- Use `cross-env` for consistent environment variable setting across platforms
+- Enable declaration maps for seamless navigation across modules
+- Configure IDE/editor for optimal TypeScript support
+
+## 📋 Code Organization Checklist
+
+- [ ] Files are organized by feature/domain
+- [ ] Naming follows established conventions
+- [ ] ESLint and Prettier are configured
+- [ ] TypeScript strict mode is enabled
+- [ ] Large files are split into focused modules
+- [ ] Tests cover edge cases and error scenarios
+- [ ] Environment variables are properly typed
+- [ ] Build scripts are environment-specific
+- [ ] Project references are used for large codebases
+- [ ] Dependencies are clearly defined and managed
+description:
+globs:
+alwaysApply: false
+---
